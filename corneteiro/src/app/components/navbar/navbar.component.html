@@ -1,0 +1,7 @@
+<nav class="navbar">
+  <div class="flex gap-2">
+    @for (button of navbarButtons; track button.text) {
+    <app-button [config]="button" />
+    }
+  </div>
+</nav>
