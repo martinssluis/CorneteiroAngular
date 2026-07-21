@@ -1,0 +1,16 @@
+.navbar {
+  display: flex;
+  align-items: center;
+}
+
+.navbar > div {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+}
+
+@media (max-width: 40rem) {
+  .navbar > div {
+    gap: var(--spacing-sm);
+  }
+}
