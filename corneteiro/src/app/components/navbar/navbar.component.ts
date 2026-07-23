@@ -1,44 +1,35 @@
 import { Component } from '@angular/core';
-import { ButtonComponent } from '../button/button.component';
-import { IButtonConfig } from '../button/button.types';
+import { RouterLink } from '@angular/router';
+import { UnordedListComponent } from '../unorded-list/unorded-list.component';
+
+interface NavbarLink {
+  text: string;
+  route: string;
+}
 
 @Component({
   selector: 'app-navbar',
   imports: [
-    ButtonComponent,
+    RouterLink,
+    UnordedListComponent,
   ],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css',
 })
 export class NavbarComponent {
 
-  navbarButtons: IButtonConfig[] = [
+  navbarLinks: NavbarLink[] = [
     {
       text: 'Recomendações',
-      class: 'btn--primary',
-      action: () => this.handleRecomendacoes()
+      route: '/'
     },
     {
       text: 'Atletas',
-      class: 'btn--primary',
-      action: () => this.handleAtletas()
+      route: '/atletas'
     },
     {
       text: 'Clubes',
-      class: 'btn--primary',
-      action: () => this.handleClubes()
+      route: '/clubes'
     }
   ];
-
-  handleRecomendacoes(){
-    console.log("Redirecionando para recomendações")
-  }
-
-  handleAtletas(){
-    console.log("Redirecionando para atletas")
-  }
-
-  handleClubes(){
-    console.log("Redirecionando para clubes")
-  }
 }
