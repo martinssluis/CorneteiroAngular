@@ -3,14 +3,16 @@
   align-items: center;
 }
 
-.navbar > div {
-  display: flex;
-  align-items: center;
+.navbar app-unorded-list {
+  width: 100%;
+}
+
+.navbar ul {
   gap: var(--spacing-md);
 }
 
 @media (max-width: 40rem) {
-  .navbar > div {
+  .navbar ul {
     gap: var(--spacing-sm);
   }
 }
