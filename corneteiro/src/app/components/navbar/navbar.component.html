@@ -1,7 +1,9 @@
 <nav class="navbar">
-  <div class="flex gap-2">
-    @for (button of navbarButtons; track button.text) {
-    <app-button [config]="button" />
+  <app-unorded-list orientation="horizontal">
+    @for (link of navbarLinks; track link.text) {
+    <li>
+      <a [routerLink]="link.route" class="nav-link">{{ link.text }}</a>
+    </li>
     }
-  </div>
+  </app-unorded-list>
 </nav>
