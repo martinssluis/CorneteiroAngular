@@ -2,7 +2,8 @@
   <h1>Recomendações</h1>
   <p class="subtitulo">
     Custo-benefício = média de pontos ÷ preço. Só entram atletas prováveis, com preço maior que zero
-    e o mínimo de jogos escolhido.
+    e o mínimo de jogos escolhido. As estrelas são relativas ao melhor da lista (5 estrelas); passe o
+    mouse sobre uma linha para ver o cálculo.
   </p>
 
   <div class="filtros">
@@ -22,7 +23,7 @@
         <select #clube (change)="alterarClube(clube.value)">
           <option value="">Todos</option>
           @for (c of clubes(); track c.id) {
-            <option [value]="c.id">{{ c.apelido }}</option>
+            <option [value]="c.id">{{ c.nome_completo }}</option>
           }
         </select>
       </label>
@@ -61,11 +62,12 @@
             <th class="num">Preço</th>
             <th class="num">Média</th>
             <th class="num">Jogos</th>
-            <th class="num">Custo-benefício</th>
+            <th class="avaliacao">Custo-benefício</th>
           </tr>
         </thead>
         <tbody>
           @for (a of atletas(); track a.atleta_id; let i = $index) {
+            @let notaAtleta = estrelas(a.custo_beneficio, maximoAtletas());
             <tr [title]="a.motivo">
               <td>{{ i + 1 }}</td>
               <td><strong>{{ a.apelido }}</strong></td>
@@ -74,7 +76,11 @@
               <td class="num">C$ {{ a.preco_num.toFixed(2) }}</td>
               <td class="num">{{ a.media_num.toFixed(2) }}</td>
               <td class="num">{{ a.jogos_num }}</td>
-              <td class="num destaque">{{ a.custo_beneficio.toFixed(3) }}</td>
+              <td class="avaliacao">
+                <span class="estrelas" role="img"
+                      [style.--preenchimento]="notaAtleta * 20 + '%'"
+                      [attr.aria-label]="rotuloEstrelas(notaAtleta)">★★★★★</span>
+              </td>
             </tr>
           }
         </tbody>
@@ -90,21 +96,26 @@
             <th>#</th>
             <th>Clube</th>
             <th class="num">Atletas elegíveis</th>
-            <th class="num">Custo-benefício médio</th>
+            <th class="avaliacao">Custo-benefício médio</th>
           </tr>
         </thead>
         <tbody>
           @for (c of clubesRanking(); track c.clube_id; let i = $index) {
+            @let notaClube = estrelas(c.custo_beneficio_medio, maximoClubes());
             <tr [title]="c.motivo">
               <td>{{ i + 1 }}</td>
               <td class="clube">
                 @if (c.escudos['45x45']) {
-                  <img [src]="c.escudos['45x45']" [alt]="c.apelido" width="28" height="28" />
+                  <img [src]="c.escudos['45x45']" [alt]="c.nome" width="28" height="28" />
                 }
-                <strong>{{ c.apelido }}</strong>
+                <strong>{{ c.nome }}</strong>
               </td>
               <td class="num">{{ c.quantidade_atletas }}</td>
-              <td class="num destaque">{{ c.custo_beneficio_medio.toFixed(3) }}</td>
+              <td class="avaliacao">
+                <span class="estrelas" role="img"
+                      [style.--preenchimento]="notaClube * 20 + '%'"
+                      [attr.aria-label]="rotuloEstrelas(notaClube)">★★★★★</span>
+              </td>
             </tr>
           }
         </tbody>

@@ -38,8 +38,8 @@ export class RecomendacoesComponent implements OnInit {
   carregando = signal(true);
   erro = signal<string | null>(null);
 
-  private apelidoDoClube = computed(
-    () => new Map(this.clubes().map((clube) => [clube.id, clube.apelido]))
+  private nomeDosClubes = computed(
+    () => new Map(this.clubes().map((clube) => [clube.id, clube.nome_completo]))
   );
 
   ngOnInit(): void {
@@ -91,8 +91,21 @@ export class RecomendacoesComponent implements OnInit {
     this.carregar();
   }
 
+  // Estrelas relativas ao melhor da lista: o líder tem 5 e os demais proporcionalmente, em meias estrelas.
+  maximoAtletas = computed(() => Math.max(0, ...this.atletas().map((a) => a.custo_beneficio)));
+  maximoClubes = computed(() => Math.max(0, ...this.clubesRanking().map((c) => c.custo_beneficio_medio)));
+
+  estrelas(valor: number, maximo: number): number {
+    if (maximo <= 0 || valor <= 0) return 0;
+    return Math.round((valor / maximo) * 5 * 2) / 2;
+  }
+
+  rotuloEstrelas(estrelas: number): string {
+    return `${String(estrelas).replace('.', ',')} de 5 estrelas`;
+  }
+
   nomeDoClube(id: number): string {
-    return this.apelidoDoClube().get(id) ?? `Clube ${id}`;
+    return this.nomeDosClubes().get(id) ?? `Clube ${id}`;
   }
 
   nomeDaPosicao(id: number): string {

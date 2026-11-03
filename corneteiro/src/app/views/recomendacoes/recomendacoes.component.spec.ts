@@ -13,7 +13,7 @@ const atleta = {
   motivo: 'Média 6,00 em 20 jogos ÷ preço C$ 10,00 = 0,600',
 };
 const clubeRanking = {
-  clube_id: 262, apelido: 'Flamengo', escudos: {}, quantidade_atletas: 8,
+  clube_id: 262, nome: 'Flamengo', apelido: 'Mengão', escudos: {}, quantidade_atletas: 8,
   custo_beneficio_medio: 0.55, motivo: 'Média do custo-benefício de 8 atletas elegíveis = 0,550',
 };
 
@@ -26,7 +26,7 @@ describe('RecomendacoesComponent', () => {
   function responderCarga() {
     http.expectOne('http://localhost:1895/clubes').flush({
       quantidade: 1,
-      clubes: [{ id: 262, slug: 'flamengo', apelido: 'Flamengo', nome: 'FLA', escudos: {} }],
+      clubes: [{ id: 262, slug: 'flamengo', apelido: 'Mengão', nome_completo: 'Flamengo', nome: 'FLA', escudos: {} }],
     });
     http.expectOne((r) => r.url === URL_ATLETAS).flush({ quantidade: 1, atletas: [atleta] });
     http.expectOne((r) => r.url === URL_CLUBES_RANKING).flush({ quantidade: 1, clubes: [clubeRanking] });
@@ -50,15 +50,37 @@ describe('RecomendacoesComponent', () => {
     req.flush({ quantidade: 1, atletas: [atleta] });
     http.expectOne('http://localhost:1895/clubes').flush({
       quantidade: 1,
-      clubes: [{ id: 262, slug: 'flamengo', apelido: 'Flamengo', nome: 'FLA', escudos: {} }],
+      clubes: [{ id: 262, slug: 'flamengo', apelido: 'Mengão', nome_completo: 'Flamengo', nome: 'FLA', escudos: {} }],
     });
     http.expectOne((r) => r.url === URL_CLUBES_RANKING).flush({ quantidade: 0, clubes: [] });
     fixture.detectChanges();
 
     expect(texto()).toContain('Arrascaeta');
     expect(texto()).toContain('Flamengo');
+    expect(texto()).not.toContain('Mengão');
     expect(texto()).toContain('Meia');
-    expect(texto()).toContain('0.600');
+  });
+
+  it('mostra o custo-benefício em estrelas relativas ao melhor da lista', () => {
+    http.expectOne('http://localhost:1895/clubes').flush({ quantidade: 0, clubes: [] });
+    http.expectOne((r) => r.url === URL_ATLETAS).flush({
+      quantidade: 3,
+      atletas: [
+        { ...atleta, atleta_id: 1, custo_beneficio: 0.8 },  // melhor da lista -> 5 estrelas
+        { ...atleta, atleta_id: 2, custo_beneficio: 0.4 },  // metade -> 2,5 estrelas
+        { ...atleta, atleta_id: 3, custo_beneficio: 0.0 },  // zero -> 0 estrela
+      ],
+    });
+    http.expectOne((r) => r.url === URL_CLUBES_RANKING).flush({ quantidade: 0, clubes: [] });
+    fixture.detectChanges();
+
+    const estrelas = Array.from(fixture.nativeElement.querySelectorAll('.estrelas') as NodeListOf<HTMLElement>);
+    expect(estrelas.map((e) => e.getAttribute('aria-label'))).toEqual([
+      '5 de 5 estrelas',
+      '2,5 de 5 estrelas',
+      '0 de 5 estrelas',
+    ]);
+    expect(texto()).not.toContain('0.800');
   });
 
   it('alterna para o ranking de clubes', () => {
@@ -69,7 +91,9 @@ describe('RecomendacoesComponent', () => {
     fixture.detectChanges();
 
     expect(texto()).toContain('Custo-benefício médio');
-    expect(texto()).toContain('0.550');
+    expect(texto()).toContain('Flamengo');
+    expect(texto()).not.toContain('Mengão');
+    expect(fixture.nativeElement.querySelector('.estrelas')?.getAttribute('aria-label')).toBe('5 de 5 estrelas');
   });
 
   it('ao escolher uma posição, consulta de novo com o filtro', () => {

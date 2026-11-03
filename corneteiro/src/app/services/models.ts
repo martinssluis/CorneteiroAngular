@@ -32,6 +32,7 @@ export interface ClubeDTO {
   id: number;
   slug: string;
   apelido: string;
+  nome_completo: string;
   escudos: Record<string, string>;
   nome: string;
 }
@@ -72,6 +73,7 @@ export interface CustoBeneficioAtletasResponse {
 
 export interface CustoBeneficioClube {
   clube_id: number;
+  nome: string;
   apelido: string;
   escudos: Record<string, string>;
   quantidade_atletas: number;

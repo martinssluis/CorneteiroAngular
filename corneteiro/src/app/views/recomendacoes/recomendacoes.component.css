@@ -13,6 +13,18 @@ table { width: 100%; border-collapse: collapse; background: white; border-radius
 th, td { padding: var(--spacing-sm) var(--spacing-md); text-align: left; border-bottom: 1px solid var(--color-ink-100); }
 th { background: var(--color-ink-100); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.03em; }
 .num { text-align: right; }
-.destaque { font-weight: 700; color: var(--color-brand-700); }
+/* Estrelas: o preenchimento (0% a 100%) vem da variável --preenchimento definida no template. */
+.avaliacao { text-align: right; white-space: nowrap; }
+.estrelas {
+  --preenchimento: 0%;
+  display: inline-block;
+  font-size: 1.25rem;
+  line-height: 1;
+  letter-spacing: 0.1em;
+  background: linear-gradient(90deg, var(--color-brand-500) var(--preenchimento), var(--color-ink-200) var(--preenchimento));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
 .clube { display: flex; align-items: center; gap: var(--spacing-sm); }
 .erro { color: var(--color-brand-700); }
