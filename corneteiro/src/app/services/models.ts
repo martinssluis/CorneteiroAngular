@@ -10,7 +10,7 @@ export interface AtletaDTO {
   posicao_id: number;
   status_id: number;
   preco_num: number;
-  ponto_num: number;
+  pontos_num: number;
   media_num: number;
   variacao_num: number;
   jogos_num: number;
