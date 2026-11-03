@@ -18,6 +18,25 @@ O frontend consome o backend em `http://localhost:1895` (definido em `src/app/se
 Se o backend estiver desligado, as chamadas HTTP falham, mas a aplicação continua abrindo.
 Para subir o backend, veja o README em `CorneteiroJava`.
 
+> Rode os comandos dentro de `CorneteiroAngular/corneteiro` (onde está o `package.json`),
+> e não na pasta `CorneteiroAngular`.
+
+### Páginas
+
+| Rota | Conteúdo |
+|------|----------|
+| `/atletas` | Atletas do mercado (`GET /atletas`) |
+| `/clubes` | Clubes com escudo (`GET /clubes`) |
+
+Se o backend estiver indisponível ou a API do Cartola estiver bloqueada na sua rede,
+as páginas exibem uma mensagem de erro em vez da lista.
+
+### Testes
+
+```bash
+npm test
+```
+
 Se a porta 4200 estiver ocupada: `npm start -- --port 4300`
 (nesse caso, o CORS do backend precisa liberar a nova origem).
 
