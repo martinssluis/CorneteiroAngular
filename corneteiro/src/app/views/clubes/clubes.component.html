@@ -1,0 +1,23 @@
+<section class="page">
+  <h1>Clubes</h1>
+
+  @if (carregando()) {
+    <p>Carregando clubes...</p>
+  } @else if (erro()) {
+    <p class="erro">{{ erro() }}</p>
+  } @else if (clubes().length === 0) {
+    <p>Nenhum clube encontrado.</p>
+  } @else {
+    <ul class="grid">
+      @for (clube of clubes(); track clube.id) {
+        <li class="card">
+          @if (clube.escudos['60x60']) {
+            <img [src]="clube.escudos['60x60']" [alt]="clube.nome" width="60" height="60" />
+          }
+          <strong>{{ clube.nome }}</strong>
+          <span>{{ clube.apelido }}</span>
+        </li>
+      }
+    </ul>
+  }
+</section>
