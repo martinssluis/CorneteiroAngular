@@ -2,6 +2,25 @@
 
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 22.0.7.
 
+## Como rodar o frontend (individualmente)
+
+**Pré-requisitos:** Node.js 22+ e npm.
+
+```bash
+cd CorneteiroAngular/corneteiro
+npm install   # apenas na primeira vez (ou quando o package.json mudar)
+npm start     # equivale a `ng serve`
+```
+
+O frontend abre em `http://localhost:4200` com hot reload.
+
+O frontend consome o backend em `http://localhost:1895` (definido em `src/app/services/api.service.ts`).
+Se o backend estiver desligado, as chamadas HTTP falham, mas a aplicação continua abrindo.
+Para subir o backend, veja o README em `CorneteiroJava`.
+
+Se a porta 4200 estiver ocupada: `npm start -- --port 4300`
+(nesse caso, o CORS do backend precisa liberar a nova origem).
+
 ## Development server
 
 To start a local development server, run:
