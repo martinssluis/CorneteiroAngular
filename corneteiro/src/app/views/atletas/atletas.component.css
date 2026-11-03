@@ -1,0 +1,4 @@
+.page { padding: var(--spacing-lg); }
+.grid { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: var(--spacing-md); }
+.card { background: white; border-radius: var(--radius-md); padding: var(--spacing-md); display: flex; flex-direction: column; align-items: center; gap: var(--spacing-xs); text-align: center; }
+.erro { color: var(--color-brand-700); }

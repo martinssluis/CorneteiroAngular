@@ -1,1 +1,22 @@
-<p>atletas works!</p>
+<section class="page">
+  <h1>Atletas</h1>
+
+  @if (carregando()) {
+    <p>Carregando atletas...</p>
+  } @else if (erro()) {
+    <p class="erro">{{ erro() }}</p>
+  } @else if (atletas().length === 0) {
+    <p>Nenhum atleta encontrado.</p>
+  } @else {
+    <ul class="grid">
+      @for (atleta of atletas(); track atleta.atleta_id) {
+        <li class="card">
+          <img [src]="atleta.foto?.replace('FORMATO', '80x80')" [alt]="atleta.apelido" width="80" height="80" />
+          <strong>{{ atleta.apelido }}</strong>
+          <span>C$ {{ atleta.preco_num }}</span>
+          <span>Média: {{ atleta.media_num }}</span>
+        </li>
+      }
+    </ul>
+  }
+</section>
