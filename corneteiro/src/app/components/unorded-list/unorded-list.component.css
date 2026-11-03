@@ -17,6 +17,8 @@ li {
 
 .list-vertical li {
   padding: 0.5rem 0;
+  display: block;
+  margin-bottom: 0.5rem;
 }
 
 .list-horizontal {
