@@ -25,6 +25,7 @@ Para subir o backend, veja o README em `CorneteiroJava`.
 
 | Rota | Conteúdo |
 |------|----------|
+| `/recomendacoes` (página inicial) | Ranking de custo-benefício de atletas e de clubes, com filtros de posição, clube e mínimo de jogos (`GET /recomendacoes/custo-beneficio`) |
 | `/atletas` | Atletas do mercado (`GET /atletas`) |
 | `/clubes` | Clubes com escudo (`GET /clubes`) |
 
