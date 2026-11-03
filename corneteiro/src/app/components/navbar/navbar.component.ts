@@ -21,7 +21,7 @@ export class NavbarComponent {
   navbarLinks: NavbarLink[] = [
     {
       text: 'Recomendações',
-      route: '/'
+      route: '/recomendacoes'
     },
     {
       text: 'Atletas',
