@@ -29,4 +29,23 @@ describe('ApiService', () => {
     service.listarClubes().subscribe();
     http.expectOne('http://localhost:1895/clubes').flush({ quantidade: 0, clubes: [] });
   });
+
+  it('custoBeneficioAtletas envia só os filtros preenchidos', () => {
+    service.custoBeneficioAtletas({ posicaoId: 4, clubeId: null, minJogos: 5 }).subscribe();
+
+    const req = http.expectOne((r) => r.url === 'http://localhost:1895/recomendacoes/custo-beneficio');
+    expect(req.request.params.get('posicaoId')).toBe('4');
+    expect(req.request.params.get('minJogos')).toBe('5');
+    expect(req.request.params.has('clubeId')).toBe(false);
+    req.flush({ atletas: [] });
+  });
+
+  it('custoBeneficioClubes não envia clubeId', () => {
+    service.custoBeneficioClubes({ clubeId: 262, posicaoId: 5 }).subscribe();
+
+    const req = http.expectOne((r) => r.url === 'http://localhost:1895/recomendacoes/custo-beneficio/clubes');
+    expect(req.request.params.get('posicaoId')).toBe('5');
+    expect(req.request.params.has('clubeId')).toBe(false);
+    req.flush({ clubes: [] });
+  });
 });
